@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import { redis } from "../lib/redis.js";
 import { set } from "mongoose";
 
-const generarateTokens = (userId) => {
+const generateTokens = (userId) => {
   const accessToken = jwt.sign({ userId }, process.env.ACCESS_TOKEN_SECRET, {
     expiresIn: "15m",
   });
@@ -58,7 +58,7 @@ export const signup = async (req, res) => {
     });
 
     // Autenticación y generación de tokens
-    const { accessToken, refreshToken } = generarateTokens(user._id);
+    const { accessToken, refreshToken } = generateTokens(user._id);
     await storeRefreshToken(user._id, refreshToken);
 
     setCookies(res, accessToken, refreshToken);
@@ -79,14 +79,14 @@ export const signup = async (req, res) => {
   }
 };
 
-export const login = async (req, res) => {
+export const login = async (req, res) => { 
   try {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
 
     if (user && (await user.comparePassword(password))) {
-      const { accessToken, refreshToken } = generarateTokens(user._id);
+      const { accessToken, refreshToken } = generateTokens(user._id);
 
       await storeRefreshToken(user._id, refreshToken);
       setCookies(res, accessToken, refreshToken);

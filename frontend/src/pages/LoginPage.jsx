@@ -4,18 +4,17 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { InputForm } from "../components";
+import { useUserStore } from "../stores/useUserStore";
 
 export const LoginPage = () => {
-
-
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const loading = false;
+
+  const { login, loading } = useUserStore();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(email, password);
+    login({ email: email.trim().toLowerCase(), password });
   };
 
   return (
@@ -28,7 +27,7 @@ export const LoginPage = () => {
           transition={{ duration: 0.8 }}
         >
           <h2 className="mt-6 text-center text-3xl font-extrabold text-emerald-400">
-            Crea tu cuenta
+            Inicia Sesión
           </h2>
         </motion.div>
 
