@@ -1,49 +1,44 @@
-// Autor: Álvaro Zermeño
-
 import { create } from "zustand";
 import toast from "react-hot-toast";
 import axios from "../lib/axios";
 
-export const useProductStore = create((set) => ({ 
-    products: [],
-    loading: false,
+export const useProductStore = create((set) => ({
+	products: [],
+	loading: false,
 
-    setProducts: (products) => set({ products }),
-
-    createProduct: async (productData) => {
-        set({ loading: true });
-        try {
-            const res = await axios.post("/products", productData);
-            set((prevState) => ({
-                products: [...prevState.products, res.data],
-                loading: false,
-            }));
-            toast.success("Producto creado exitosamente");
-        } catch (error) {
-            set({ loading: false });
-            toast.error(error.response?.data?.message || "Error desconocido");
-        }
-    },
-
-    fetchAllProducts: async () => {
+	setProducts: (products) => set({ products }),
+	createProduct: async (productData) => {
+		set({ loading: true });
+		try {
+			const res = await axios.post("/products", productData);
+			set((prevState) => ({
+				products: [...prevState.products, res.data],
+				loading: false,
+			}));
+			toast.success("Producto creado correctamente");
+		} catch (error) {
+			toast.error(error.response.data.error);
+			set({ loading: false });
+		}
+	},
+	fetchAllProducts: async () => {
 		set({ loading: true });
 		try {
 			const response = await axios.get("/products");
 			set({ products: response.data.products, loading: false });
 		} catch (error) {
 			set({ error: "Failed to fetch products", loading: false });
-			toast.error(error.response?.data?.error || "Failed to fetch products");
+			toast.error(error.response.data.error || "Failed to fetch products");
 		}
 	},
-
-    fetchProductsByCategory: async (category) => {
+	fetchProductsByCategory: async (category) => {
 		set({ loading: true });
 		try {
 			const response = await axios.get(`/products/category/${category}`);
 			set({ products: response.data.products, loading: false });
 		} catch (error) {
 			set({ error: "Failed to fetch products", loading: false });
-			toast.error(error.response?.data?.error || "Fallo al obtener productos");
+			toast.error(error.response.data.error || "Failed to fetch products");
 		}
 	},
 	deleteProduct: async (productId) => {
@@ -54,17 +49,18 @@ export const useProductStore = create((set) => ({
 				products: prevProducts.products.filter((product) => product._id !== productId),
 				loading: false,
 			}));
+			toast.success("Producto eliminado correctamente");
+
+			// TODO: Eliminar el producto de todos los carritos de los usuarios si esta presente
 		} catch (error) {
 			set({ loading: false });
-			toast.error(error.response?.data?.error || "Fallo al eliminar el producto");
+			toast.error(error.response.data.error || "Failed to delete product");
 		}
 	},
-
-    toggleFeaturedProduct: async (productId) => {
+	toggleFeaturedProduct: async (productId) => {
 		set({ loading: true });
 		try {
 			const response = await axios.patch(`/products/${productId}`);
-			// this will update the isFeatured prop of the product
 			set((prevProducts) => ({
 				products: prevProducts.products.map((product) =>
 					product._id === productId ? { ...product, isFeatured: response.data.isFeatured } : product
@@ -73,7 +69,7 @@ export const useProductStore = create((set) => ({
 			}));
 		} catch (error) {
 			set({ loading: false });
-			toast.error(error.response?.data?.error || "Fallo al actualizar el producto destacado");
+			toast.error(error.response.data.error || "Failed to update product");
 		}
 	},
 	fetchFeaturedProducts: async () => {
@@ -83,7 +79,7 @@ export const useProductStore = create((set) => ({
 			set({ products: response.data, loading: false });
 		} catch (error) {
 			set({ error: "Failed to fetch products", loading: false });
-			console.log("Error al obtener productos destacados:", error);
+			console.log("Error fetching featured products:", error);
 		}
 	},
 }));

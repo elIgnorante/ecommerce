@@ -3,6 +3,7 @@ import User from "../models/user.model.js";
 import jwt from "jsonwebtoken";
 import { redis } from "../lib/redis.js";
 import { set } from "mongoose";
+import e from "express";
 
 const generateTokens = (userId) => {
   const accessToken = jwt.sign({ userId }, process.env.ACCESS_TOKEN_SECRET, {
@@ -98,7 +99,7 @@ export const login = async (req, res) => {
         role: user.role,
       });
     } else {
-      res.status(401).json({ message: "Invalid email or password" });
+      res.status(401).json({ message: "Invalid email or password"});
     }
   } catch (error) {
     console.error("Login error:", error.message);

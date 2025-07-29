@@ -68,7 +68,7 @@ export const getProductsByCategory = async (req, res) => {
     const { category } = req.params; // obtiene la categoría de los parámetros de la solicitud
     try {
         const products = await Product.find({ category }); // busca productos por categoría
-        res.json(products); // devuelve los productos encontrados
+        res.json({products}); // devuelve los productos encontrados
     } catch (error) {
         console.error("Error fetching products by category:", error.message);
         res.status(500).json({ message: "Server error", error: error.message });

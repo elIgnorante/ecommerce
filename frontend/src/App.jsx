@@ -1,5 +1,6 @@
+// Álvaro Zermeño
 import { Routes, Route, Navigate } from "react-router-dom";
-import { HomePage, LoginPage, SignupPage, AdminPage } from "./pages";
+import { HomePage, LoginPage, SignupPage, AdminPage, CategoryPage, CartPage } from "./pages";
 import { Navbar } from "./components";
 import { Toaster } from "react-hot-toast";
 import { useUserStore } from "./stores/useUserStore";
@@ -32,6 +33,8 @@ function App() {
           <Route path="/signup" element={!user ? <SignupPage /> : <Navigate to={'/'} /> } />
           <Route path="/login" element={!user ? <LoginPage /> : <Navigate to={'/'} />} />
           <Route path="/secret-dashboard" element={user?.role === 'admin' ? <AdminPage /> : <Navigate to={'/login'} />} />
+          <Route path="/category/:category" element={<CategoryPage />} />
+          <Route path="/cart" element={user ? <CartPage /> : <Navigate to={'/login'} />} />
         </Routes>
       </div>
       <Toaster/>
