@@ -3,16 +3,24 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { HomePage, LoginPage, SignupPage, AdminPage, CategoryPage, CartPage } from "./pages";
 import { Navbar } from "./components";
 import { Toaster } from "react-hot-toast";
-import { useUserStore } from "./stores/useUserStore";
+import { useUserStore, useCartStore } from "./stores";
 import { useEffect } from "react";
 import { LoadingSpinner } from "./components";
 
+
 function App() {
   const {user, checkAuth, checkingAuth} = useUserStore();
+  const { getCartItems} = useCartStore();
 
   useEffect(() => {
     checkAuth()
   }, [checkAuth]);
+
+  useEffect(() => {
+  if (!checkingAuth && user) {
+    getCartItems();
+  }
+}, [checkingAuth, user, getCartItems]);
 
   if (checkingAuth) return <LoadingSpinner/>
   return (

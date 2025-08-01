@@ -36,9 +36,9 @@ export const useCartStore = create((set, get) => ({
 	getCartItems: async () => {
 		try {
 			const res = await axios.get("/cart");
+			console.log("Cart items fetched:", res.data);
 			set({ cart: res.data });
 			get().calculateTotals();
-			console.log(res.data);
 		} catch (error) {
 			set({ cart: [] });
 			toast.error(error.response.data.message || "Ocurrio un error");
