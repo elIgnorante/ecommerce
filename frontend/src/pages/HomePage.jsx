@@ -38,8 +38,8 @@ export const HomePage = () => {
           ))}
         </div>
 
-        {!isLoading && useProductStore.length > 0 && <FeaturedProducts featuredProducts = {products} />}
-      
+        {!isLoading && products.length > 0 && <FeaturedProducts featuredProducts={products} />}
+
       </div>
     </div>
   );

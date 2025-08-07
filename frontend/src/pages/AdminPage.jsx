@@ -7,9 +7,9 @@ import {AnalyticsTab, ProductsList, CreateProductForm} from "../components";
 import { useProductStore } from "../stores/useProductStore";
 
 const tabs = [
-	{ id: "create", label: "Create Product", icon: PlusCircle },
-	{ id: "products", label: "Products", icon: ShoppingBasket },
-	{ id: "analytics", label: "Analytics", icon: BarChart },
+	{ id: "create", label: "Crear Producto", icon: PlusCircle },
+	{ id: "products", label: "Productos", icon: ShoppingBasket },
+	{ id: "analytics", label: "Analíticas", icon: BarChart },
 ];
 
 export const AdminPage = () => {
@@ -30,7 +30,7 @@ export const AdminPage = () => {
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.8 }}
 				>
-					Admin Dashboard
+					Dashboard de Administración
 				</motion.h1>
 
                 <div className='flex justify-center mb-8'>

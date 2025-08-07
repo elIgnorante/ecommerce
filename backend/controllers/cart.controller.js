@@ -24,7 +24,6 @@ export const getCartProducts = async (req, res) => {
       return { ...product.toJSON(), quantity: item ? item.quantity : 1 };
     });
 
-    console.log("Cart items backend:", cartItems);
 
     res.json(cartItems);
   } catch (error) {
@@ -72,6 +71,23 @@ export const removeAllFromCart = async (req, res) => {
     res.json(user.cartItems);
   } catch (error) {
     console.error("Error in removeAllFromCart controller", error.message);
+    res.status(500).json({ message: "Server Error", error: error.message });
+  }
+};
+
+
+// TODO: Revisar si es necesario también limpiar los cupones aplicados al carrito en el modelo de usuario
+export const cleanAllCart = async (req, res) => {
+  try {
+    const user = req.user;
+
+    // Limpia el carrito del usuario
+    user.cartItems = [];
+    await user.save();
+    
+    res.json({ message: "El carrito ha sido limpiado exitosamente "});
+  } catch (error) {
+    console.error("Error in cleanAllCart controller", error.message);
     res.status(500).json({ message: "Server Error", error: error.message });
   }
 };

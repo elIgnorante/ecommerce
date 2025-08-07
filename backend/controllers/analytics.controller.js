@@ -45,7 +45,7 @@ export const getDailySalesData = async (startDate, endDate) => {
         $group: {
           _id: {
             $dateToString: {
-              formant: "%Y-%m-%d",
+              format: "%Y-%m-%d",
               date: "$createdAt",
             },
           },
@@ -56,7 +56,7 @@ export const getDailySalesData = async (startDate, endDate) => {
       { $sort: { _id: 1 } },
     ]);
 
-    const dateArray = getDatesInRage(startDate, endDate);
+    const dateArray = getDatesInRange(startDate, endDate);
     return dateArray.map((date) => {
       const foundData = dailySalesData.find((item) => item._id === date);
 
@@ -71,7 +71,7 @@ export const getDailySalesData = async (startDate, endDate) => {
   }
 };
 
-function getDatesInRage(startDate, endDate) {
+function getDatesInRange(startDate, endDate) {
   const dates = [];
   let currentDate = new Date(startDate);
 

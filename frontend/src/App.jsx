@@ -1,6 +1,6 @@
 // Álvaro Zermeño
 import { Routes, Route, Navigate } from "react-router-dom";
-import { HomePage, LoginPage, SignupPage, AdminPage, CategoryPage, CartPage } from "./pages";
+import { HomePage, LoginPage, SignupPage, AdminPage, CategoryPage, CartPage, PurchaseSuccessPage, PurchaseCancelPage } from "./pages";
 import { Navbar } from "./components";
 import { Toaster } from "react-hot-toast";
 import { useUserStore, useCartStore } from "./stores";
@@ -43,6 +43,8 @@ function App() {
           <Route path="/secret-dashboard" element={user?.role === 'admin' ? <AdminPage /> : <Navigate to={'/login'} />} />
           <Route path="/category/:category" element={<CategoryPage />} />
           <Route path="/cart" element={user ? <CartPage /> : <Navigate to={'/login'} />} />
+          <Route path="/purchase-success" element={user ? <PurchaseSuccessPage /> : <Navigate to={'/login'} />} />
+          <Route path="/purchase-cancel" element={user ? <PurchaseCancelPage /> : <Navigate to={'/login'} />} />
         </Routes>
       </div>
       <Toaster/>

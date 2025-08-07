@@ -6,7 +6,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import axios from "../lib/axios";
 
 const stripePromise = loadStripe(
-	"sk_test_51RiMO0FY00FcRc6d2ffGYdYpbY8tMvzuvzUO68gXp7sOLvQaY5aDvYxPwYmHWmuI0H9dxpVd5fEHodEcxR8IqYnq00sU1CQWFm"
+	"pk_test_51RiMO0FY00FcRc6dwP7yju2fCW0oBbR2fLjncQ308vEtobvuWYa7Q86jFPVfzryAhhA9zkPL50zN1YA88ZU26z2l00pHQi0Lpg"
 );
 
 export const OrderSummary = () => {
@@ -70,7 +70,7 @@ export const OrderSummary = () => {
 				</div>
 
 				<motion.button
-					className='flex w-full items-center justify-center rounded-lg bg-emerald-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-300'
+					className='cursor-pointer flex w-full items-center justify-center rounded-lg bg-emerald-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-300'
 					whileHover={{ scale: 1.05 }}
 					whileTap={{ scale: 0.95 }}
 					onClick={handlePayment}
@@ -82,7 +82,7 @@ export const OrderSummary = () => {
 					<span className='text-sm font-normal text-gray-400'>ó</span>
 					<Link
 						to='/'
-						className='inline-flex items-center gap-2 text-sm font-medium text-emerald-400 underline hover:text-emerald-300 hover:no-underline'
+						className='cursor-pointer inline-flex items-center gap-2 text-sm font-medium text-emerald-400 underline hover:text-emerald-300 hover:no-underline'
 					>
 						Continuar comprando
 						<MoveRight size={16} />
