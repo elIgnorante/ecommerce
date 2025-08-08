@@ -2,6 +2,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -35,7 +36,7 @@ const corsOptions = {
     : ['http://localhost:3000'],
   credentials: true
 };
-app.use(cors(corsOptions));
+app.use(cors(corsOptions)); // <-- Esta es la línea que estaba fallando
 
 // Routes
 app.use("/api/auth", authRoutes);
